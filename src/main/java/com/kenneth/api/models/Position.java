@@ -1,12 +1,23 @@
 package com.kenneth.api.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.eclipse.microprofile.graphql.Type;
+
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.Set;
 
-public class Position {
+@Type
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Position extends BaseEntity {
 
     private String role;
 
@@ -18,6 +29,6 @@ public class Position {
     @ManyToOne
     private Company company;
 
-    @OneToMany
+    @ManyToMany
     private Set<Tag> tags;
 }

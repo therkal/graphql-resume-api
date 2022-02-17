@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @GraphQLApi
-public class CompanyMutations {
+public class CompanyGraphqlApi {
 
     @Inject
     CompanyService service;
