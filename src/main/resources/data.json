@@ -1,0 +1,18 @@
+{
+  "tags":[
+    { "name" : "Java" }, { "name" : "Microservices" }, { "name" : "Spring Boot" }, { "name" : "Quarkus" },
+    { "name" : "Kafka" }, { "name" : "Kubernetes" }, { "name" : "Azure" }, { "name" : "Docker" }, { "name" : "Ci/CD" },
+    { "name" : "Angular" }
+  ],
+  "positions": [
+    {
+      "role": "Software Engineer - Azure Cloud",
+      "startDate": "2020-10-01",
+      "endDate": "",
+      "companyName": "Vanderlande Industries",
+      "tags": [
+        "Java", "Microservices", "Quarkus", "Spring Boot", "Kafka"
+      ]
+    }
+  ]
+}

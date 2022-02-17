@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Vanderlande Industries",
+    "lat": "1",
+    "lon": "2",
+    "city": "Veghel",
+    "country": "the Netherlands"
+  },
+  {
+    "name": "Vanderlande Industries",
+    "lat": "-1",
+    "lon": "-20",
+    "city": "Québec City",
+    "country": "Canada"
+  }
+]
