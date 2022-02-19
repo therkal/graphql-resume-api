@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 import org.eclipse.microprofile.graphql.Type;
 
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -24,11 +22,9 @@ public class Position extends BaseEntity {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    private ObjectId user;
+
     private String timeInService;
-
-    @ManyToOne
-    private Company company;
-
-    @ManyToMany
-    private Set<Tag> tags;
+    private ObjectId company;
+    private Set<String> tags;
 }

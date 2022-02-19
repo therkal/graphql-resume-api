@@ -1,17 +1,20 @@
 package com.kenneth.api.services;
 
 import com.kenneth.api.graphql.input.UpdatePosition;
+import com.kenneth.api.models.BaseEntity;
+import com.kenneth.api.models.Company;
 import com.kenneth.api.models.Position;
-import com.kenneth.api.models.Tag;
 import com.kenneth.api.repositories.PositionRepository;
-import com.kenneth.api.repositories.TagRepository;
 import io.smallrye.mutiny.Uni;
+import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.*;
-import java.util.stream.Collectors;
+import javax.ws.rs.NotFoundException;
+import java.util.List;
 
+@Slf4j
 @ApplicationScoped
 public class PositionService {
 
@@ -19,33 +22,26 @@ public class PositionService {
     PositionRepository repository;
 
     @Inject
-    TagRepository tagRepository;
+    CompanyService companyService;
 
     public Uni<Position> createOrUpdate(UpdatePosition createPositionRequest) {
-        Set<Tag> tagSet;
+        return companyService
+                // Find company by id
+                .findById(new ObjectId(createPositionRequest.getCompanyId()))
+                // If found, get the id
+                .map(BaseEntity::getId)
+                // Switch streams to process the persist operation.
+                .flatMap(id -> {
+                    Position toBeCreated = Position.builder()
+                        .role(createPositionRequest.getRole())
+                        .startDate(createPositionRequest.getStartDate())
+                        .endDate(createPositionRequest.getEndDate())
+                        .tags(createPositionRequest.getTags())
+                        .company(id)
+                        .build();
 
-        Position toBeCreated = Position.builder()
-                .role(createPositionRequest.getRole())
-                .startDate(createPositionRequest.getStartDate())
-                .endDate(createPositionRequest.getEndDate())
-                //ToDo: add Company
-                .build();
-
-        tagSet = createPositionRequest.getTags().stream()
-                .map(s ->
-                    tagRepository.find("name", s)
-                        .firstResult().await()
-                        .asOptional().indefinitely()
-                        .orElse(
-                            Tag.builder()
-                                    .name(s)
-                                    .build()
-                    ))
-                .collect(Collectors.toSet());
-
-        toBeCreated.setTags(tagSet);
-
-        return repository.persistOrUpdate(toBeCreated);
+                    return repository.persistOrUpdate(toBeCreated);
+                });
     }
 
     public Uni<List<Position>> get() {

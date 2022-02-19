@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.graphql.Type;
 
-import javax.persistence.UniqueConstraint;
-
 @Type
 @Builder
 @Data
